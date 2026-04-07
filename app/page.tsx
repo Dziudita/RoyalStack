@@ -6,6 +6,7 @@ export default function Home() {
       subtitle: "Fast daily warm-up",
       prize: "$50",
       buyIn: "$2",
+      badge: "Fast Entry",
     },
     {
       name: "Evening Sprint",
@@ -13,6 +14,7 @@ export default function Home() {
       subtitle: "Most active daily table",
       prize: "$150",
       buyIn: "$5",
+      badge: "Most Active",
     },
     {
       name: "Night Stack",
@@ -20,6 +22,7 @@ export default function Home() {
       subtitle: "Late grind for deeper players",
       prize: "$300",
       buyIn: "$10",
+      badge: "Late Grind",
     },
   ];
 
@@ -35,7 +38,121 @@ export default function Home() {
       }}
     >
       <div style={{ maxWidth: "1180px", margin: "0 auto" }}>
+        <style>{`
+          .rs-grid-hero {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 24px;
+            align-items: stretch;
+            margin-bottom: 28px;
+          }
+
+          .rs-daily-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+          }
+
+          .rs-grand-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+          }
+
+          .rs-title {
+            font-size: 72px;
+            line-height: 0.95;
+            margin: 0;
+            color: #fff5f7;
+            letter-spacing: -0.05em;
+            max-width: 760px;
+          }
+
+          .rs-section-title {
+            margin: 0 0 24px 0;
+            font-size: 44px;
+            color: #fff4f7;
+            letter-spacing: -0.04em;
+          }
+
+          .rs-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(170, 70, 105, 0.42) !important;
+            box-shadow: 0 10px 30px rgba(90,20,50,0.16);
+          }
+
+          .rs-btn:hover {
+            filter: brightness(1.08);
+            transform: translateY(-1px);
+          }
+
+          .rs-btn, .rs-card {
+            transition: all 0.22s ease;
+          }
+
+          @media (max-width: 980px) {
+            .rs-grid-hero {
+              grid-template-columns: 1fr;
+            }
+
+            .rs-daily-grid {
+              grid-template-columns: 1fr;
+            }
+
+            .rs-grand-grid {
+              grid-template-columns: repeat(2, 1fr);
+            }
+
+            .rs-title {
+              font-size: 56px;
+              max-width: 100%;
+            }
+
+            .rs-section-title {
+              font-size: 36px;
+            }
+          }
+
+          @media (max-width: 640px) {
+            .rs-title {
+              font-size: 42px;
+              line-height: 1.02;
+            }
+
+            .rs-section-title {
+              font-size: 30px;
+            }
+
+            .rs-grand-grid {
+              grid-template-columns: 1fr;
+            }
+
+            .rs-topbar {
+              flex-direction: column;
+              align-items: flex-start !important;
+            }
+
+            .rs-actions {
+              width: 100%;
+            }
+
+            .rs-actions button {
+              width: 100%;
+            }
+
+            .rs-hero-buttons {
+              flex-direction: column;
+              width: 100%;
+            }
+
+            .rs-hero-buttons button {
+              width: 100%;
+            }
+          }
+        `}</style>
+
         <header
+          className="rs-topbar"
           style={{
             display: "flex",
             justifyContent: "space-between",
@@ -68,35 +185,26 @@ export default function Home() {
             </div>
           </div>
 
-          <button
-            style={{
-              padding: "13px 20px",
-              borderRadius: "16px",
-              border: "1px solid rgba(255,255,255,0.08)",
-              background: "rgba(255,255,255,0.04)",
-              color: "white",
-              cursor: "pointer",
-              fontWeight: 600,
-            }}
-          >
-            Enter Lobby
-          </button>
+          <div className="rs-actions">
+            <button
+              className="rs-btn"
+              style={{
+                padding: "13px 20px",
+                borderRadius: "16px",
+                border: "1px solid rgba(255,255,255,0.08)",
+                background: "rgba(255,255,255,0.04)",
+                color: "white",
+                cursor: "pointer",
+                fontWeight: 600,
+              }}
+            >
+              Enter Lobby
+            </button>
+          </div>
         </header>
 
-        <section
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1.15fr 0.85fr",
-            gap: "24px",
-            alignItems: "stretch",
-            marginBottom: "28px",
-          }}
-        >
-          <div
-            style={{
-              padding: "16px 0",
-            }}
-          >
+        <section className="rs-grid-hero">
+          <div style={{ padding: "16px 0" }}>
             <div
               style={{
                 display: "inline-block",
@@ -114,16 +222,7 @@ export default function Home() {
               Minimal Gothic / Dark Cherry
             </div>
 
-            <h1
-              style={{
-                fontSize: "72px",
-                lineHeight: 0.95,
-                margin: 0,
-                color: "#fff5f7",
-                letterSpacing: "-0.05em",
-                maxWidth: "760px",
-              }}
-            >
+            <h1 className="rs-title">
               Built for tournaments,
               <br />
               not noise.
@@ -144,6 +243,7 @@ export default function Home() {
             </p>
 
             <div
+              className="rs-hero-buttons"
               style={{
                 display: "flex",
                 gap: "14px",
@@ -152,6 +252,7 @@ export default function Home() {
               }}
             >
               <button
+                className="rs-btn"
                 style={{
                   padding: "15px 24px",
                   border: "none",
@@ -167,6 +268,7 @@ export default function Home() {
               </button>
 
               <button
+                className="rs-btn"
                 style={{
                   padding: "15px 24px",
                   borderRadius: "16px",
@@ -218,6 +320,7 @@ export default function Home() {
             <div style={{ display: "grid", gap: "12px" }}>
               {tournaments.map((t) => (
                 <div
+                  className="rs-card"
                   key={t.name}
                   style={{
                     display: "flex",
@@ -312,13 +415,7 @@ export default function Home() {
             higher pressure, and a cleaner path to the top of the stack.
           </p>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
-              gap: "14px",
-            }}
-          >
+          <div className="rs-grand-grid">
             {[
               ["Buy-in", "$25"],
               ["Prize Pool", "$2,500"],
@@ -326,6 +423,7 @@ export default function Home() {
               ["Starts", "20:00"],
             ].map(([label, value]) => (
               <div
+                className="rs-card"
                 key={label}
                 style={{
                   padding: "15px 16px",
@@ -372,27 +470,14 @@ export default function Home() {
             Daily Tournaments
           </div>
 
-          <h2
-            style={{
-              margin: 0,
-              fontSize: "44px",
-              color: "#fff4f7",
-              letterSpacing: "-0.04em",
-              marginBottom: "24px",
-            }}
-          >
+          <h2 className="rs-section-title">
             Three daily battles. One steady rhythm.
           </h2>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: "20px",
-            }}
-          >
+          <div className="rs-daily-grid">
             {tournaments.map((t, index) => (
               <div
+                className="rs-card"
                 key={t.name}
                 style={{
                   borderRadius: "24px",
@@ -421,11 +506,7 @@ export default function Home() {
                     marginBottom: "14px",
                   }}
                 >
-                  {index === 0
-                    ? "Fast Entry"
-                    : index === 1
-                    ? "Most Active"
-                    : "Late Grind"}
+                  {t.badge}
                 </div>
 
                 <h3
@@ -463,6 +544,7 @@ export default function Home() {
                 </div>
 
                 <button
+                  className="rs-btn"
                   style={{
                     marginTop: "22px",
                     width: "100%",
