@@ -1,6 +1,6 @@
 export const metadata = {
   title: "RoyalStack Poker",
-  description: "Daily tournaments. Grand stacks."
+  description: "Daily tournaments. Grand moments.",
 };
 
 export default function RootLayout({
