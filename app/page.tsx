@@ -1,5 +1,18 @@
+'use client';
+
+import { useEffect, useState } from "react";
+
+type Tournament = {
+  name: string;
+  time: string;
+  subtitle: string;
+  prize: string;
+  buyIn: string;
+  badge: string;
+};
+
 export default function Home() {
-  const tournaments = [
+  const tournaments: Tournament[] = [
     {
       name: "Morning Blitz",
       time: "09:00",
@@ -26,6 +39,58 @@ export default function Home() {
     },
   ];
 
+  function getNextTournament(list: Tournament[]) {
+    const now = new Date();
+
+    const upcoming = list
+      .map((t) => {
+        const [hours, minutes] = t.time.split(":").map(Number);
+        const target = new Date();
+        target.setHours(hours, minutes, 0, 0);
+
+        if (target.getTime() <= now.getTime()) {
+          target.setDate(target.getDate() + 1);
+        }
+
+        return {
+          ...t,
+          target,
+        };
+      })
+      .sort((a, b) => a.target.getTime() - b.target.getTime());
+
+    return upcoming[0];
+  }
+
+  function formatTime(ms: number) {
+    const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+    const h = Math.floor(totalSeconds / 3600);
+    const m = Math.floor((totalSeconds % 3600) / 60);
+    const s = totalSeconds % 60;
+
+    return `${h.toString().padStart(2, "0")}:${m
+      .toString()
+      .padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+  }
+
+  const [nextTournamentName, setNextTournamentName] = useState("");
+  const [timeLeft, setTimeLeft] = useState("");
+
+  useEffect(() => {
+    const updateCountdown = () => {
+      const next = getNextTournament(tournaments);
+      const diff = next.target.getTime() - Date.now();
+
+      setNextTournamentName(next.name);
+      setTimeLeft(formatTime(diff));
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <main
       style={{
@@ -39,6 +104,10 @@ export default function Home() {
     >
       <div style={{ maxWidth: "1180px", margin: "0 auto" }}>
         <style>{`
+          * {
+            box-sizing: border-box;
+          }
+
           .rs-grid-hero {
             display: grid;
             grid-template-columns: 1.15fr 0.85fr;
@@ -241,6 +310,41 @@ export default function Home() {
               events, and a signature dark-cherry style that feels premium
               instead of overcrowded.
             </p>
+
+            <div
+              style={{
+                marginTop: "20px",
+                padding: "14px 16px",
+                borderRadius: "16px",
+                background: "rgba(255,255,255,0.03)",
+                border: "1px solid rgba(255,255,255,0.06)",
+                display: "inline-block",
+              }}
+            >
+              <div
+                style={{
+                  color: "#aaa",
+                  fontSize: "13px",
+                }}
+              >
+                Next tournament:{" "}
+                <span style={{ color: "#f0c5d1", fontWeight: 700 }}>
+                  {nextTournamentName}
+                </span>
+              </div>
+
+              <div
+                style={{
+                  fontSize: "24px",
+                  fontWeight: 700,
+                  color: "#f0c5d1",
+                  marginTop: "6px",
+                  letterSpacing: "0.05em",
+                }}
+              >
+                {timeLeft}
+              </div>
+            </div>
 
             <div
               className="rs-hero-buttons"
