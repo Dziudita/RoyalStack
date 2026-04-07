@@ -1,25 +1,7 @@
-export const metadata = {
-  title: "RoyalStack Poker",
-  description: "Daily tournaments. Grand moments.",
-};
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: any) {
   return (
     <html lang="en">
-      <body
-        style={{
-          margin: 0,
-          background: "#050507",
-          color: "white",
-          fontFamily: "Arial, sans-serif",
-        }}
-      >
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
